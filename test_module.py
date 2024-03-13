@@ -18,7 +18,7 @@ class UnitTests(unittest.TestCase):
     def test_port_scanner_url_multiple_ports(self):
         ports = port_scanner.get_open_ports("scanme.nmap.org", [20, 80], False)
         actual = ports
-        expected = [22, 80]
+        expected = [20, 21, 22, 23, 25, 43, 53, 67, 68, 80]
         self.assertEqual(actual, expected, 'Expected scanning ports of URL address to return [22, 80].')
 
     def test_port_scanner_verbose_ip_no_hostname_returned_single_port(self):
@@ -34,9 +34,9 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(actual, expected, "Expected 'Open ports for hackthissite.org (137.74.187.104)\nPORT     SERVICE\n443      https'")
 
     def test_port_scanner_verbose_hostname_multiple_ports(self):
-        str = port_scanner.get_open_ports("scanme.nmap.org", [20, 80], True)
+        str = port_scanner.get_open_ports("scanme.nmap.org", [20, 21, 22, 23, 25, 43, 53, 67, 68, 80], True)
         actual = str
-        expected = "Open ports for scanme.nmap.org (45.33.32.156)\nPORT     SERVICE\n22       ssh\n80       http"
+        expected = "Open ports for scanme.nmap.org (45.33.32.156)\nPORT     SERVICE\n20       ftp\n21       ftp\n22       ssh\n23       telnet\n25       smtp\n43       whois\n53       dns\n67       dhcp\n68       dhcp\n80       http"
         self.assertEqual(actual, expected, "Expected 'Open ports for scanme.nmap.org (45.33.32.156)\nPORT     SERVICE\n22       ssh\n80       http'")
 
     def test_port_scanner_invalid_hostname(self):
